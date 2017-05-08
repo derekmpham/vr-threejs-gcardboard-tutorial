@@ -35,7 +35,16 @@
 			container,
 			effect,
 			controls,
-			clock
+			clock,
+
+			// particles
+			particles = new THREE.Object3D(),
+			totalParticles = 200,
+			maxParticleSize = 200,
+			particleRotationSpeed = 0,
+			particleRotationDeg = 0,
+			lastColorRange = [0, 0.3],
+			currentColorRange = [0, 0.3]
 	</script>
 </body>
 </html>
