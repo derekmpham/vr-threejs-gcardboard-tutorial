@@ -70,6 +70,12 @@
 			controls.noPan = true;
 			controls.noZoom = true;
 
+			function setOrientationControls(e) {
+				if (!e.alpha) {
+					return;
+				}
+			}
+
 
 
 
