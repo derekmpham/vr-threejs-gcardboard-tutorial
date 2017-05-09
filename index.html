@@ -137,6 +137,21 @@
 			particles.position.y = 70;
 			scene.add(particles);
 		}
+
+		function adjustToWeatherConditions() {
+			var cityIDs = '';
+			for (var i = 0; i < cities.length; i++) {
+				cityIDs += cities[i][1];
+				if (i != cities.length -1) {
+					cityIDs += ',';
+				}
+			}
+			getURL('http://api.openweathermap.org/data/2.5/group?id=' + cityIDs + '&APPID=kj34723jkh23kj89dfkh2b28ey982hwm223iuyhe2c', function (info) {
+					cityWeather = info.list;
+
+					lookupTimezone(0, cityWeather.length);
+				});
+		}
 	</script>
 </body>
 </html>
