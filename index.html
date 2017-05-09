@@ -45,7 +45,10 @@
 			particleRotationSpeed = 0,
 			particleRotationDeg = 0,
 			lastColorRange = [0, 0.3],
-			currentColorRange = [0, 0.3]
+			currentColorRange = [0, 0.3],
+
+			// city and weather api set up
+			currentCity = 0,
 
 		init();
 
@@ -174,6 +177,16 @@
 					applyWeatherConditions();
 				}
 			});
+		}
+
+		function applyWeatherConditions() {
+			displayCurrentCityName(cities[currentCity][0]);
+
+			var info = cityWeather[currentCity];
+
+			particleRotationSpeed = info.wind.speed/2;
+			particleRotationDeg = info.wind.deg;
+
 		}
 	</script>
 </body>
