@@ -189,6 +189,23 @@
 
 			var timeThere = cityTimes[currentCity] ? cityTimes[currentCity].getUTCHours() : 0,
 				isDay = timeThere >= 6 && timeThere <= 18;
+
+			if (isDay) {
+				switch (info.weather[0].main) {
+					case 'Clouds':
+						currentColorRange = [0, 0.01];
+						break;
+					case 'Rain':
+						currentColorRange = [0.7, 0.1];
+						break;
+					case 'Clear':
+					default:
+						currentColorRange = [0.6, 0.7];
+						break;
+				}
+			} else {
+					currentColorRange = [0.69, 0.6];
+			}
 		}
 	</script>
 </body>
