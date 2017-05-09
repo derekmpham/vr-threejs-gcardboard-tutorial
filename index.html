@@ -215,6 +215,15 @@
 
 			setTimeout(applyWeatherConditions, 5000);
 		}
+
+		function displayCurrentCityName(name) {
+			scene.remove(currentCityTextMesh);
+
+			currentCityText = new THREE.TextGeometry(name, {
+				size: 4,
+				height: 1
+			});
+		}
 	</script>
 </body>
 </html>
