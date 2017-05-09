@@ -116,14 +116,26 @@
 			floor.rotation.x = -Math.PI/2;
 			scene.add(floor);
 
+			var particleTexture = THREE.ImageUtils.loadTexture('textures/particle.png'),
+				spriteMaterial = new THREE.SpriteMaterial({
+					map: particleTexture,
+					color: 0xffffff
+				});
 
+			for (var i = 0; i < totalParticles; i++) {
+				var sprite = new THREE.Sprite(spriteMaterial);
 
+				sprite.scale.set(64, 64, 1.0);
+				sprite.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.75);
+				sprite.position.setLength(maxParticleSize * Math.random());
 
+				sprite.material.blending = THREE.AdditiveBlending;
 
+				particles.add(sprite);
+			}
 
-
-
-
+			particles.position.y = 70;
+			scene.add(particles);
 		}
 	</script>
 </body>
