@@ -206,6 +206,14 @@
 			} else {
 					currentColorRange = [0.69, 0.6];
 			}
+
+			if (currentCity < cities.length-1) {
+				currentCity++;
+			} else {
+				currentCity = 0;
+			}
+
+			setTimeout(applyWeatherConditions, 5000);
 		}
 	</script>
 </body>
