@@ -187,6 +187,8 @@
 			particleRotationSpeed = info.wind.speed/2;
 			particleRotationDeg = info.wind.deg;
 
+			var timeThere = cityTimes[currentCity] ? cityTimes[currentCity].getUTCHours() : 0,
+				isDay = timeThere >= 6 && timeThere <= 18;
 		}
 	</script>
 </body>
