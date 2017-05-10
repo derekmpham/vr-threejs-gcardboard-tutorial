@@ -246,6 +246,8 @@
 		function animate() {
 			var elapsedSeconds = clock.getElapsedTime(),
 				particleRotationDirection = particleRotationDeg <= 180 ? -1 : 1;
+
+			particles.rotation.y = elapsedSeconds * particleRotationSpeed * particleRotationDirection;
 		}
 	</script>
 </body>
