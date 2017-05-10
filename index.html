@@ -248,6 +248,15 @@
 				particleRotationDirection = particleRotationDeg <= 180 ? -1 : 1;
 
 			particles.rotation.y = elapsedSeconds * particleRotationSpeed * particleRotationDirection;
+
+			if (lastColorRange[0] != currentColorRange[0] && lastColorRange[1] != currentColorRange[1]) {
+
+				for (var i = 0; i < totalParticles; i++) {
+					particles.children[i].material.color.setHSL(currentColorRange[0], currentColorRange[1], (Math.random() * (0.7 - 0.2) + 0.2));
+				}
+
+				lastColorRange = currentColorRange;
+			}
 		}
 	</script>
 </body>
