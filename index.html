@@ -140,6 +140,12 @@
 
 			particles.position.y = 70;
 			scene.add(particles);
+
+			adjustToWeatherConditions();
+
+			clock = new THREE.Clock();
+
+			animate();
 		}
 
 		function adjustToWeatherConditions() {
