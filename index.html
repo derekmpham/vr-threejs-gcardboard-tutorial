@@ -4,19 +4,19 @@
 	<title>VR with Three.js</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <style>
-      body {
-        margin: 0px;
-        overflow: hidden;
-      }
-      #webglviewer {
-        bottom: 0;
-        left: 0;
-        position: absolute;
-        right: 0;
-        top: 0;
-      }
-    </style>
+	<style>
+		body {
+			margin: 0px;
+			overflow: hidden;
+		}
+		#webglviewer {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	</style>
 </head>
 <body>
 	<div id="webglviewer"></div>
@@ -30,13 +30,13 @@
 	<script src="js/timezonedb.js" type="text/javascript"></script>
 	<script>
 		var scene,
-			camera,
-			renderer,
-			element,
-			container,
-			effect,
-			controls,
-			clock,
+		camera,
+		renderer,
+		element,
+		container,
+		effect,
+		controls,
+		clock,
 
 			// particles
 			particles = new THREE.Object3D(),
@@ -50,29 +50,29 @@
 			// city and weather api set up
 			currentCity = 0,
 
-		init();
+			init();
 
-		function init() {
-			scene = new THREE.Scene();
-			camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.001, 700);
-			camera.position.set(0, 15, 0);
-			scene.add(camera);
+			function init() {
+				scene = new THREE.Scene();
+				camera = new THREE.PerspectiveCamera(90, window.innerWidth/window.innerHeight, 0.001, 700);
+				camera.position.set(0, 15, 0);
+				scene.add(camera);
 
-			renderer = new THREE.WebGLRenderer();
-			element = renderer.domElement;
-			container = document.getElementById('webglviewer');
-			container.appendChild(element);
+				renderer = new THREE.WebGLRenderer();
+				element = renderer.domElement;
+				container = document.getElementById('webglviewer');
+				container.appendChild(element);
 
-			effect = new THREE.StereoEffect(renderer);
+				effect = new THREE.StereoEffect(renderer);
 
-			controls = new THREE.OrbitControls(camera, element);
-			controls.target.set(
-				camera.position.x + 0.15,
-				camera.position.y,
-				camera.position.z
-				);
-			controls.noPan = true;
-			controls.noZoom = true;
+				controls = new THREE.OrbitControls(camera, element);
+				controls.target.set(
+					camera.position.x + 0.15,
+					camera.position.y,
+					camera.position.z
+					);
+				controls.noPan = true;
+				controls.noZoom = true;
 
 			// preferred controls through device orientation
 			function setOrientationControls(e) {
@@ -121,10 +121,10 @@
 			scene.add(floor);
 
 			var particleTexture = THREE.ImageUtils.loadTexture('textures/particle.png'),
-				spriteMaterial = new THREE.SpriteMaterial({
-					map: particleTexture,
-					color: 0xffffff
-				});
+			spriteMaterial = new THREE.SpriteMaterial({
+				map: particleTexture,
+				color: 0xffffff
+			});
 
 			for (var i = 0; i < totalParticles; i++) {
 				var sprite = new THREE.Sprite(spriteMaterial);
@@ -157,10 +157,10 @@
 				}
 			}
 			getURL('http://api.openweathermap.org/data/2.5/group?id=' + cityIDs + '&APPID=kj34723jkh23kj89dfkh2b28ey982hwm223iuyhe2c', function (info) {
-					cityWeather = info.list;
+				cityWeather = info.list;
 
-					lookupTimezones(0, cityWeather.length);
-				});
+				lookupTimezones(0, cityWeather.length);
+			});
 		}
 
 		function lookupTimezones(t, len) {
@@ -194,23 +194,23 @@
 			particleRotationDeg = info.wind.deg;
 
 			var timeThere = cityTimes[currentCity] ? cityTimes[currentCity].getUTCHours() : 0,
-				isDay = timeThere >= 6 && timeThere <= 18;
+			isDay = timeThere >= 6 && timeThere <= 18;
 
 			if (isDay) {
 				switch (info.weather[0].main) {
 					case 'Clouds':
-						currentColorRange = [0, 0.01];
-						break;
+					currentColorRange = [0, 0.01];
+					break;
 					case 'Rain':
-						currentColorRange = [0.7, 0.1];
-						break;
+					currentColorRange = [0.7, 0.1];
+					break;
 					case 'Clear':
 					default:
-						currentColorRange = [0.6, 0.7];
-						break;
+					currentColorRange = [0.6, 0.7];
+					break;
 				}
 			} else {
-					currentColorRange = [0.69, 0.6];
+				currentColorRange = [0.69, 0.6];
 			}
 
 			if (currentCity < cities.length-1) {
@@ -245,7 +245,7 @@
 
 		function animate() {
 			var elapsedSeconds = clock.getElapsedTime(),
-				particleRotationDirection = particleRotationDeg <= 180 ? -1 : 1;
+			particleRotationDirection = particleRotationDeg <= 180 ? -1 : 1;
 
 			particles.rotation.y = elapsedSeconds * particleRotationSpeed * particleRotationDirection;
 
@@ -259,6 +259,61 @@
 			}
 
 			requestAnimationFrame(animate);
+
+			update(clock.getDelta());
+			render(clock.getDelta());
+		}
+		function resize() {
+			var width = container.offsetWidth;
+			var height = container.offsetHeight;
+
+			camera.aspect = width / height;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize(width, height);
+			effect.setSize(width, height);
+		}
+
+		function update(dt) {
+			resize();
+
+			camera.updateProjectionMatrix();
+
+			controls.update(dt);
+		}
+
+		function render(dt) {
+			effect.render(scene, camera);
+		}
+
+		function fullscreen() {
+			if (container.requestFullscreen) {
+				container.requestFullscreen();
+			} else if (container.msRequestFullscreen) {
+				container.msRequestFullscreen();
+			} else if (container.mozRequestFullScreen) {
+				container.mozRequestFullScreen();
+			} else if (container.webkitRequestFullscreen) {
+				container.webkitRequestFullscreen();
+			}
+		}
+
+		function getURL(url, callback) {
+			var xmlhttp = new XMLHttpRequest();
+
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4) {
+					if (xmlhttp.status == 200){
+						callback(JSON.parse(xmlhttp.responseText));
+					}
+					else {
+						console.log('We had an error, status code: ', xmlhttp.status);
+					}
+				}
+			}
+
+			xmlhttp.open('GET', url, true);
+			xmlhttp.send();
 		}
 	</script>
 </body>
